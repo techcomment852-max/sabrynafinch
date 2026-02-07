@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(214, 41, 119, 0.3);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border: 8px solid #ff4d8d;
+        }
+        
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #ff4d8d, #ff9ec0, #ff4d8d);
+        }
+        
+        h1 {
+            color: #d62977;
+            font-size: 3.2rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subtitle {
+            color: #555;
+            font-size: 1.4rem;
+            margin-bottom: 30px;
+        }
+        
+        .gif-container {
+            margin: 30px auto;
+            width: 300px;
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border: 5px solid #ff9ec0;
+        }
+        
+        .gif-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .question {
+            font-size: 2.2rem;
+            color: #d62977;
+            margin: 25px 0;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            position: relative;
+            min-height: 120px;
+        }
+        
+        .btn {
+            padding: 18px 40px;
+            font-size: 1.8rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            position: absolute;
+        }
+        
+        .yes-btn {
+            background: linear-gradient(to right, #36D1DC, #5B86E5);
+            color: white;
+            left: 50%;
+            transform: translateX(-120%);
+            z-index: 10;
+        }
+        
+        .yes-btn:hover {
+            background: linear-gradient(to right, #2ab7c1, #4a76d8);
+            transform: translateX(-120%) scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        
+        .no-btn {
+            background: linear-gradient(to right, #FF416C, #FF4B2B);
+            color: white;
+            left: 50%;
+            transform: translateX(20%);
+            z-index: 5;
+            transition: all 0.1s ease;
+        }
+        
+        .no-btn:hover {
+            cursor: default;
+        }
+        
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            color: #ff4d8d;
+            opacity: 0;
+            animation: floatUp 4s linear infinite;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .message {
+            font-size: 1.8rem;
+            color: #333;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: rgba(255, 158, 192, 0.2);
+            border-radius: 15px;
+            display: none;
+        }
+        
+        .message.show {
+            display: block;
+            animation: fadeIn 1s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .footer {
+            margin-top: 30px;
+            color: #777;
+            font-size: 1.2rem;
+        }
+        
+        .instructions {
+            margin-top: 15px;
+            font-size: 1rem;
+            color: #ff4d8d;
+            font-style: italic;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .question { font-size: 1.8rem; }
+            .gif-container { width: 250px; height: 250px; }
+            .btn { padding: 15px 30px; font-size: 1.5rem; }
+            .container { padding: 30px 20px; }
+        }
+        
+        @media (max-width: 480px) {
+            h1 { font-size: 2rem; }
+            .subtitle { font-size: 1.1rem; }
+            .question { font-size: 1.5rem; }
+            .gif-container { width: 200px; height: 200px; }
+            .buttons-container { min-height: 100px; }
+            .btn { padding: 12px 24px; font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My Dearest Valentine</h1>
+        <p class="subtitle">I have a very important question to ask you...</p>
+        
+        <div class="gif-container">
+            <img id="valentineGif" src="https://media.giphy.com/media/3o7TKsQ8gTp3WqXqjq/giphy.gif" alt="Puppy with begging eyes">
+        </div>
+        
+        <div class="question">Will you be my Valentine?</div>
+        
+        <div class="buttons-container">
+            <button class="btn yes-btn" id="yesBtn">YES! <i class="fas fa-heart"></i></button>
+            <button class="btn no-btn" id="noBtn">No</button>
+        </div>
+        
+        <div class="message" id="message">
+            <i class="fas fa-heart" style="color:#ff4d8d;"></i> 
+            Yay! You've made me the happiest person in the world! 
+            <i class="fas fa-heart" style="color:#ff4d8d;"></i><br>
+            <span style="font-size: 1.4rem; display: block; margin-top: 10px;">Can't wait to celebrate with you! 💝</span>
+        </div>
+        
+        <p class="instructions">(Hint: Try clicking the "No" button if you dare!)</p>
+        
+        <div class="footer">
+            Made with <i class="fas fa-heart" style="color:#ff4d8d;"></i> just for you
+        </div>
+        
+        <div class="hearts" id="heartsContainer"></div>
+    </div>
+
+    <script>
+        // Get DOM elements
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const valentineGif = document.getElementById('valentineGif');
+        const message = document.getElementById('message');
+        const heartsContainer = document.getElementById('heartsContainer');
+        
+        // Celebratory GIF URL
+        const celebratoryGif = "https://media.giphy.com/media/26tknCqiJrBQG6DrC/giphy.gif";
+        
+        // Create floating hearts
+        function createHearts() {
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                heartsContainer.appendChild(heart);
+            }
+        }
+        
+        // Make the "No" button unclickable and jump around
+        function makeNoButtonEvade() {
+            const container = document.querySelector('.buttons-container');
+            const containerRect = container.getBoundingClientRect();
+            
+            // Initial random position
+            moveNoButton();
+            
+            // Move button on hover
+            noBtn.addEventListener('mouseover', function() {
+                moveNoButton();
+            });
+            
+            // Move button on touch (for mobile)
+            noBtn.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+                moveNoButton();
+            });
+            
+            // Also move when cursor gets close to the button
+            document.addEventListener('mousemove', function(e) {
+                const btnRect = noBtn.getBoundingClientRect();
+                const distance = Math.sqrt(
+                    Math.pow(e.clientX - (btnRect.left + btnRect.width/2), 2) + 
+                    Math.pow(e.clientY - (btnRect.top + btnRect.height/2), 2)
+                );
+                
+                // If cursor is within 100px of the button, move it
+                if (distance < 100) {
+                    moveNoButton();
+                }
+            });
+            
+            function moveNoButton() {
+                // Calculate random position within container
+                const maxX = containerRect.width - noBtn.offsetWidth;
+                const maxY = containerRect.height - noBtn.offsetHeight;
+                
+                const randomX = Math.random() * maxX;
+                const randomY = Math.random() * maxY;
+                
+                // Apply the new position
+                noBtn.style.left = randomX + 'px';
+                noBtn.style.top = randomY + 'px';
+                noBtn.style.transform = 'none'; // Override the transform from CSS
+                
+                // Add a little rotation for extra effect
+                noBtn.style.transform += ` rotate(${Math.random() * 20 - 10}deg)`;
+            }
+        }
+        
+        // Handle "Yes" button click
+        yesBtn.addEventListener('click', function() {
+            // Change the GIF to celebratory
+            valentineGif.src = celebratoryGif;
+            
+            // Show the celebration message
+            message.classList.add('show');
+            
+            // Create more hearts
+            createHearts();
+            
+            // Hide the "No" button
+            noBtn.style.display = 'none';
+            
+            // Move "Yes" button to center
+            yesBtn.style.left = '50%';
+            yesBtn.style.transform = 'translateX(-50%)';
+            
+            // Add celebration text to the button
+            yesBtn.innerHTML = 'THANK YOU! <i class="fas fa-heart"></i>';
+            
+            // Play a celebration sound (optional)
+            playCelebrationSound();
+        });
+        
+        // Play a subtle celebration sound
+        function playCelebrationSound() {
+            try {
+                // Create a simple celebration sound using Web Audio API
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+                oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
+                oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2); // G5
+                
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                
+                oscillator.start();
+                oscillator.stop(audioContext.currentTime + 0.5);
+            } catch (e) {
+                // Audio might not be supported in some browsers, so we'll just ignore errors
+                console.log("Audio not supported in this browser");
+            }
+        }
+        
+        // Initialize the page
+        window.addEventListener('DOMContentLoaded', function() {
+            createHearts();
+            makeNoButtonEvade();
+            
+            // Add some fun text to the no button on click attempt
+            noBtn.addEventListener('click', function() {
+                const messages = [
+                    "Nope!",
+                    "Not happening!",
+                    "Try again!",
+                    "You can't catch me!",
+                    "Get the hint!",
+                    "Click YES instead!",
+                    "I'm too fast!",
+                    "Not today!",
+                    "Nice try!"
+                ];
+                
+                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                noBtn.textContent = randomMessage;
+                
+                // Reset text after a short delay
+                setTimeout(() => {
+                    noBtn.textContent = "No";
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>
